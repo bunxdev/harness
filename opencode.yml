@@ -1,3 +1,5 @@
+name: harness-opencode
+
 services:
   opencode:
     image: debian:bookworm-slim
@@ -6,6 +8,7 @@ services:
     network_mode: "host"
     volumes:
       - ./scripts:/scripts
+      - proxy_node_modules:/scripts/proxy/node_modules
       - /var/run/docker.sock:/var/run/docker.sock
     cap_add:
       - NET_ADMIN
@@ -13,3 +16,17 @@ services:
       - /dev/net/tun
     command: ["/bin/bash", "/scripts/opencode.sh"]
     restart: unless-stopped
+    environment:
+      OPENCODE_API_KEY: ${OPENCODE_API_KEY:-public}
+      GATEWAY_AUTH_TOKEN: ${CLAUDE_GATEWAY_TOKEN:-sk-ant-opencode-internal}
+      PROXY_HOST: 127.0.0.1
+      PROXY_PORT: 3000
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 60s
+
+volumes:
+  proxy_node_modules:

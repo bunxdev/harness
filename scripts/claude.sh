@@ -1,13 +1,27 @@
 #!/bin/bash
+set -euo pipefail
 
-apt update
-apt upgrade -y
+export DEBIAN_FRONTEND=noninteractive
+CLAUDE_CODE_VERSION="${CLAUDE_CODE_VERSION:-2.1.261}"
+if ! command -v curl >/dev/null || ! command -v docker >/dev/null; then
+  apt-get update
+  apt-get install -y --no-install-recommends ca-certificates curl docker.io
+  rm -rf /var/lib/apt/lists/*
+fi
 
-apt install neofetch nano docker.io curl -y
-neofetch
-curl -fsSL https://claude.ai/install.sh | bash
+export PATH="$HOME/.local/bin:$PATH"
+if ! command -v claude >/dev/null || \
+  [[ "$(claude --version 2>/dev/null)" != "$CLAUDE_CODE_VERSION (Claude Code)" ]]; then
+  curl -fsSL https://claude.ai/install.sh | bash -s -- "$CLAUDE_CODE_VERSION"
+fi
 
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
-claude --help
+if [[ "$(claude --version 2>/dev/null)" != "$CLAUDE_CODE_VERSION (Claude Code)" ]]; then
+  printf 'Expected Claude Code %s, got %s\n' \
+    "$CLAUDE_CODE_VERSION" "$(claude --version 2>/dev/null || printf 'unavailable')" >&2
+  exit 1
+fi
 
-tail -f /dev/null
+ln -sf "$HOME/.local/bin/claude" /usr/local/bin/claude
+
+claude --version
+exec tail -f /dev/null

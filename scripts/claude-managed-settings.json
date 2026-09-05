@@ -1,0 +1,48 @@
+{
+  "modelPricing": {
+    "overrides": {
+      "claude-opencode-nemotron-3.5-lightning-free": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "claude-opencode-nemotron-3-ultra-free": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "claude-opencode-muse-spark-1.3-contributor-free": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "claude-opencode-muse-spark-1.2-contributor-free": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "claude-opencode-mimo-v2.5-free": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "claude-opencode-ling-3.0-flash-fin-free": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "claude-opencode-big-pickle": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      }
+    }
+  }
+}
