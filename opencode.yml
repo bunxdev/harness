@@ -1,0 +1,15 @@
+services:
+  opencode:
+    image: debian:bookworm-slim
+    container_name: opencode
+    hostname: opencode
+    network_mode: "host"
+    volumes:
+      - ./scripts:/scripts
+      - /var/run/docker.sock:/var/run/docker.sock
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    command: ["/bin/bash", "/scripts/opencode.sh"]
+    restart: unless-stopped
