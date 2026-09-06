@@ -1,0 +1,15 @@
+services:
+  bun:
+    image: debianbase:debian12-slim
+    container_name: bun
+    hostname: bun
+    network_mode: "host"
+    volumes:
+      - ./scripts:/scripts
+      - /var/run/docker.sock:/var/run/docker.sock
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    command: ["/bin/bash", "/scripts/bun.sh"]
+    restart: unless-stopped
