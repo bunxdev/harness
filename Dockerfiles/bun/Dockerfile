@@ -1,0 +1,18 @@
+# --- Etapa 1: Construcción/Descarga (Builder) ---
+FROM debian AS builder
+
+ENV BUN_INSTALL=/root/.bun
+
+RUN apt-get install -y --no-install-recommends curl unzip ca-certificates && \
+    curl -fsSL https://bun.sh/install | bash
+
+# --- Etapa 2: Imagen Final Limpia ---
+FROM debian
+
+ENV BUN_INSTALL=/root/.bun
+ENV PATH=$BUN_INSTALL/bin:$PATH
+
+# Copiamos ÚNICAMENTE la carpeta de Bun compilada/descargada desde el builder
+COPY --from=builder /root/.bun /root/.bun
+
+CMD ["bash"]

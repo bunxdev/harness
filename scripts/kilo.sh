@@ -1,5 +1,5 @@
 #!/bin/bash
-apt install neofetch -y
+bun pm -g trust @kilocode/cli
+bun add -g @kilocode/cli
 
-neofetch
 tail -f /dev/null

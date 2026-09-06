@@ -1,6 +1,6 @@
 services:
   kilo:
-    image: debian:12-slim
+    image: bun
     container_name: kilo
     hostname: kilo
     network_mode: "host"

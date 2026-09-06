@@ -1,11 +1,11 @@
 services:
-  debianbase:
+  debian:
     build:
       context: .
-      dockerfile: Dockerfiles/debian12-slim/Dockerfile
-    image: debianbase:debian12-slim
-    container_name: debianbase
-    hostname: debianbase
+      dockerfile: Dockerfiles/debian/Dockerfile
+    image: debian
+    container_name: debian
+    hostname: debian
     network_mode: "host"
     volumes:
       - ./scripts:/scripts
@@ -14,5 +14,5 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun
-    command: ["/bin/bash", "/scripts/debianbase.sh"]
+    command: ["/bin/bash", "/scripts/debian.sh"]
     restart: unless-stopped
