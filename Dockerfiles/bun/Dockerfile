@@ -3,7 +3,8 @@ FROM debian AS builder
 
 ENV BUN_INSTALL=/root/.bun
 
-RUN apt-get install -y --no-install-recommends curl unzip ca-certificates && \
+RUN apt update && apt upgrade -y && \
+    apt install curl unzip -y && \
     curl -fsSL https://bun.sh/install | bash
 
 # --- Etapa 2: Imagen Final Limpia ---
