@@ -1,5 +1,4 @@
 name: harness-claude
-
 services:
   claude:
     image: debian:bookworm-slim

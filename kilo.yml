@@ -1,0 +1,15 @@
+services:
+  kilo:
+    image: debian:12-slim
+    container_name: kilo
+    hostname: kilo
+    network_mode: "host"
+    volumes:
+      - ./scripts:/scripts
+      - /var/run/docker.sock:/var/run/docker.sock
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    command: ["/bin/bash", "/scripts/kilo.sh"]
+    restart: unless-stopped
