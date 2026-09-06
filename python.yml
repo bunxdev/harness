@@ -1,0 +1,39 @@
+services:
+  python:
+    image: python:3.14.7-bookworm
+    container_name: python
+    hostname: python
+    volumes:
+      - ./scripts:/scripts
+    command: ["/bin/bash", "/scripts/python.sh"]
+    restart: unless-stopped
+
+  python-web:
+    image: busybox:1.38.0-uclibc
+    pid: "service:python"
+    depends_on:
+      - python
+
+    cap_add:
+      - SYS_ADMIN
+      - SYS_CHROOT
+      - SYS_PTRACE
+
+    ports:
+      - "4004:8000"
+
+    command:
+      [
+        "/bin/busybox", "nsenter",
+        "-t", "1",
+        "-m",
+        "-r",
+        "--",
+        "/usr/local/bin/python",
+        "-m", "http.server",
+        "8000",
+        "--bind", "0.0.0.0",
+        "--directory", "/scripts"
+      ]
+
+    restart: unless-stopped

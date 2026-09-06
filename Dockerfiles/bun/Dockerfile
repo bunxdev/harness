@@ -5,10 +5,10 @@ ENV BUN_INSTALL=/root/.bun
 
 RUN apt update && apt upgrade -y && \
     apt install curl unzip -y && \
-    curl -fsSL https://bun.sh/install | bash
+    curl -fsSL https://bun.sh/install | bash 
 
 # --- Etapa 2: Imagen Final Limpia ---
-FROM debian
+FROM debian:12-slim
 
 ENV BUN_INSTALL=/root/.bun
 ENV PATH=$BUN_INSTALL/bin:$PATH

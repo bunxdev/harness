@@ -1,0 +1,41 @@
+services:
+  python:
+    image: python:3.14.7-bookworm
+    container_name: python
+    volumes:
+      - ./scripts:/scripts:ro
+    command: ["/bin/bash", "/scripts/python.sh"]
+    restart: unless-stopped
+
+  debian-web:
+    image: debian:bookworm-slim
+    container_name: debian-web
+    hostname: debian-web
+
+    pid: "service:python"
+    depends_on:
+      - python
+
+    cap_add:
+      - SYS_ADMIN
+      - SYS_CHROOT
+      - SYS_PTRACE
+
+    ports:
+      - "4004:8000"
+
+    command:
+      [
+        "/usr/bin/nsenter",
+        "-t", "1",
+        "-m",
+        "-r",
+        "--",
+        "/usr/local/bin/python",
+        "-m", "http.server",
+        "8000",
+        "--bind", "0.0.0.0",
+        "--directory", "/scripts"
+      ]
+
+    restart: unless-stopped
