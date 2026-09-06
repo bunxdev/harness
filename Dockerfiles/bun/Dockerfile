@@ -1,5 +1,5 @@
 # --- Etapa 1: Construcción/Descarga (Builder) ---
-FROM debian AS builder
+FROM dbian AS builder
 
 ENV BUN_INSTALL=/root/.bun
 

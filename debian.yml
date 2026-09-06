@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfiles/debian/Dockerfile
-    image: debian
+    image: dbian
     container_name: debian
     hostname: debian
     network_mode: "host"

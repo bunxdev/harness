@@ -1,6 +1,6 @@
 services:
   kiro:
-    image: debian
+    image: dbian
     container_name: kiro
     hostname: kiro
     network_mode: "host"
