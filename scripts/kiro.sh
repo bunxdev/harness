@@ -1,5 +1,8 @@
 #!/bin/bash
-apt install neofetch -y
+apt install curl unzip -y
+curl -fsSL https://cli.kiro.dev/install | bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 
-neofetch
+
 tail -f /dev/null

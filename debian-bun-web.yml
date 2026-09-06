@@ -1,0 +1,28 @@
+services:
+  debian-bun-web:
+    image: bun
+    container_name: debian-bun-web
+    hostname: debian-bun-web
+    volumes:
+      - ./scripts:/scripts:ro
+
+    cap_add:
+      - SYS_ADMIN
+      - SYS_CHROOT
+      - SYS_PTRACE
+
+    ports:
+      - "4004:8000"
+
+    command:
+      [
+        "/usr/bin/nsenter",
+        "-t", "1",
+        "-m",
+        "-r",
+        "--",
+        "/root/.bun/bin/bun",
+        "/scripts/bun-server.js"
+      ]
+
+    restart: unless-stopped
